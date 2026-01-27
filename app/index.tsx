@@ -1,4 +1,5 @@
 import { Text, View } from "react-native";
+import Login from "./component/Login";
 
 export default function Index() {
   return (
@@ -10,6 +11,7 @@ export default function Index() {
       }}
     >
       <Text>Here is my personal wallet</Text>
+      <Login/>
     </View>
   );
 }
