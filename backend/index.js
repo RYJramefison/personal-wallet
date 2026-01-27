@@ -1,0 +1,42 @@
+const express = require("express");
+const cors = require("cors");
+const crypto = require("crypto");
+
+const app = express();
+const PORT = 3000;
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const users = [{ id: "1", username: "juninho", password: "123456" }];
+
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ error: "Please enter both username and password" });
+  }
+
+  const user = users.find(
+    (u) => u.username === username && u.password === password
+  );
+
+  if (!user) {
+    return res.status(401).json({ error: "Invalid username or password" });
+  }
+
+  const apiKey = crypto.randomBytes(16).toString("hex");
+
+  res.json({
+    id: user.id,
+    username: user.username,
+    apiKey,
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
