@@ -37,6 +37,32 @@ app.post("/login", (req, res) => {
   });
 });
 
+app.post("/register", (req, res) => {
+  const { username, email, password } = req.body;
+
+  if (!username || !email || !password) {
+    return res
+      .status(400)
+      .json({ error: "Please enter username, email and password" });
+  }
+
+  const user = users.push({
+    id: (users.length + 1).toString(),
+    username,
+    email,
+    password,
+  });
+
+  const apiKey = crypto.randomBytes(16).toString("hex");
+
+  res.json({
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    apiKey,
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

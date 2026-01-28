@@ -1,4 +1,5 @@
-import { loginStyle } from "@/style/login-style";
+import { loginAndRegisterStyle } from "@/style/login-register-style";
+import { Link } from "expo-router";
 import { useState } from "react";
 import { Alert, Button, Text, TextInput, View } from "react-native";
 
@@ -7,7 +8,7 @@ export default function Login(){
     const [password, setPassword] =  useState("");
     const [loading, setLoading] = useState(false);
 
-    // fonction en anglais le message
+    
     const handleLogin = async () => {
         if (!userName || !password) {
           Alert.alert("Error", "Please enter both username and password");
@@ -17,7 +18,7 @@ export default function Login(){
         setLoading(true);
     
         try {
-          const response = await fetch("https://vendredi-soir-posu.onrender.com/login", {
+          const response = await fetch("http://localhost:3000/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -44,12 +45,13 @@ export default function Login(){
           setLoading(false);
         }
       };
-    return (<View>
-        <Text style={loginStyle.title}>Login</Text>
+    return (<View style={loginAndRegisterStyle.container}>
+        <Text style={loginAndRegisterStyle.title}>Login</Text>
         <Text>user name</Text>
-        <TextInput style={loginStyle.input} onChangeText={setUserName}/>
+        <TextInput style={loginAndRegisterStyle.input} value={userName} onChangeText={setUserName}/>
         <Text>password</Text>
-        <TextInput secureTextEntry={true} style={loginStyle.input} onChangeText={setPassword}/>
+        <TextInput secureTextEntry={true} style={loginAndRegisterStyle.input} value={password} onChangeText={setPassword}/>
         <Button title={loading ? "loading ..." : "Login"} onPress={handleLogin}/>
+        <Link href="/component/Register" style={loginAndRegisterStyle.link}>Go to Register</Link>
     </View>)
 }
