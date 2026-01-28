@@ -9,7 +9,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const users = [{ id: "1", username: "juninho", password: "123456" }];
+const users = [
+  {
+    id: "1",
+    username: "juninho",
+    email: "juninho@gmail.com",
+    password: "123456",
+  },
+];
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -33,6 +40,7 @@ app.post("/login", (req, res) => {
   res.json({
     id: user.id,
     username: user.username,
+    email: user.email,
     apiKey,
   });
 });
